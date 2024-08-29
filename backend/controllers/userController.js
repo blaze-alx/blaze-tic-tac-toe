@@ -64,3 +64,22 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+// To get the profile of the logged-in user
+export const getUserProfile = async (req, res) => {
+  try {
+    const user = req.user; // Populated by authMiddleware
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      username: user.username,
+      totalWins: user.totalWins,
+      totalMatches: user.totalMatches,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
